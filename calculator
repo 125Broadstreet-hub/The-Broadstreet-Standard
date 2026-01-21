@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>125 Broadstreet | Infusion Dosage Calculator</title>
+
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #faf8f5;
+      color: #222;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 32px 20px 64px;
+    }
+
+    .logo {
+      display: block;
+      margin: 0 auto 24px;
+      max-width: 220px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.2rem;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #555;
+      margin-bottom: 32px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.3rem;
+    }
+
+    ul {
+      padding-left: 18px;
+    }
+
+    .example {
+      background: #f4f1ec;
+      border-left: 4px solid #8fae9e;
+      padding: 16px;
+      margin-top: 16px;
+      border-radius: 8px;
+    }
+
+    .cta {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .cta button {
+      background: #8fae9e;
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 14px 28px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .footer {
+      margin-top: 48px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #666;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <img src="logo.png" alt="125 Broadstreet Logo" class="logo"/>
+
+    <h1>Infusion Dosage Calculator</h1>
+    <p class="subtitle">
+      Butter • Oil • Milk • Cream • Syrup
+    </p>
+
+    <div class="card">
+      <h2>What this tool does</h2>
+      <p>
+        This calculator helps you determine THC dosage for infused bases and recipes
+        without spreadsheets or manual math.
+      </p>
+      <ul>
+        <li>Total THC in your infusion</li>
+        <li>Potency per tablespoon, cup, and milliliter</li>
+        <li>THC per serving in finished recipes</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>How it works</h2>
+      <ul>
+        <li>Enter cannabis weight and potency (THC% and/or THCA%)</li>
+        <li>Apply a realistic efficiency percentage (default: 75%)</li>
+        <li>Input how much base you made and how much you used</li>
+        <li>The calculator converts everything to a universal unit (mL)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Example</h2>
+      <div class="example">
+        <strong>Input</strong><br/>
+        7g flower • 21.5% THC • 75% efficiency<br/>
+        Infused into 1 cup butter<br/>
+        Recipe uses 0.5 cup • 10 servings
+        <br/><br/>
+        <strong>Output</strong><br/>
+        ~112 mg THC per cup<br/>
+        ~7 mg THC per tablespoon<br/>
+        ~5–6 mg THC per serving
+      </div>
+    </div>
+
+    <div class="cta">
+      <button disabled>
+        Calculator UI Coming Next
+      </button>
+    </div>
+
+    <div class="footer">
+      For kitchen planning only.<br/>
+      Always label and dose responsibly.
+    </div>
+
+  </div>
+</body>
+</html>
