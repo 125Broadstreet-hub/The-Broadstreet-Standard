@@ -1,0 +1,26 @@
+{
+  "name": "125-broadstreet-dosing-calculator",
+  "version": "1.0.0",
+  "description": "Infusion dosing calculator (THC/THCA, efficiency, unit conversions) with a simple TypeScript CLI.",
+  "main": "dist/cli.js",
+  "scripts": {
+    "build": "tsc",
+    "cli": "node dist/cli.js",
+    "start": "node dist/cli.js",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "dosing",
+    "thc",
+    "thca",
+    "calculator",
+    "cannabis",
+    "dosage"
+  ],
+  "author": "125 Broadstreet",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}
