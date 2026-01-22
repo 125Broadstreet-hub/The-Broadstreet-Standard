@@ -3,149 +3,271 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>125 Broadstreet | Infusion Dosage Calculator</title>
-
+  <title>125 Broadstreet's Dosing Calculator</title>
   <style>
+    /* Minimal styles derived from the original app */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #faf8f5;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
       color: #222;
-      margin: 0;
-      padding: 0;
     }
-
     .container {
-      max-width: 720px;
+      max-width: 900px;
       margin: 0 auto;
-      padding: 32px 20px 64px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      overflow: hidden;
     }
-
-    .logo {
-      display: block;
-      margin: 0 auto 24px;
-      max-width: 220px;
-    }
-
-    h1 {
-      text-align: center;
-      font-size: 2.2rem;
-      margin-bottom: 8px;
-    }
-
-    .subtitle {
-      text-align: center;
-      color: #555;
-      margin-bottom: 32px;
-    }
-
-    .card {
-      background: #ffffff;
-      border-radius: 12px;
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
       padding: 24px;
-      margin-bottom: 24px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    }
-
-    .card h2 {
-      margin-top: 0;
-      font-size: 1.3rem;
-    }
-
-    ul {
-      padding-left: 18px;
-    }
-
-    .example {
-      background: #f4f1ec;
-      border-left: 4px solid #8fae9e;
-      padding: 16px;
-      margin-top: 16px;
-      border-radius: 8px;
-    }
-
-    .cta {
       text-align: center;
-      margin-top: 40px;
     }
-
-    .cta button {
-      background: #8fae9e;
-      color: #fff;
-      border: none;
-      border-radius: 999px;
-      padding: 14px 28px;
-      font-size: 1rem;
-      cursor: pointer;
+    .header img.logo {
+      max-width: 140px;
+      display: block;
+      margin: 0 auto 12px;
     }
-
-    .footer {
-      margin-top: 48px;
-      text-align: center;
-      font-size: 0.85rem;
-      color: #666;
+    .header h1 { font-size: 24px; margin-bottom: 6px; }
+    .content { padding: 30px; }
+    .section { margin-bottom: 20px; }
+    .section-title { font-weight: 600; margin-bottom: 12px; color: #333; }
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 16px; }
+    label { display:block; margin-bottom:6px; font-size:14px; color:#555; }
+    input[type="number"], select { padding:10px; border-radius:8px; border:1px solid #ddd; width:100%; }
+    .calculate-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white; border: none; padding: 12px 20px; border-radius: 10px; cursor:pointer; width:100%;
+      font-weight:700; margin-top:16px;
     }
+    .results { background:#f8f9fa; padding:20px; border-radius:12px; margin-top:20px; display:none; }
+    .result-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(140px,1fr)); gap:12px; }
+    .result-item { background:white; padding:12px; border-radius:8px; text-align:center; }
+    .result-value { font-weight:700; font-size:18px; }
+    .disclaimer { margin-top:12px; background:#fff3cd; padding:12px; border-radius:8px; color:#856404; }
+    .back-link { display:inline-block; margin-top:12px; color:#333; text-decoration:none; }
   </style>
 </head>
-
 <body>
   <div class="container">
-
-    <img src="logo.png" alt="125 Broadstreet Logo" class="logo"/>
-
-    <h1>Infusion Dosage Calculator</h1>
-    <p class="subtitle">
-      Butter • Oil • Milk • Cream • Syrup
-    </p>
-
-    <div class="card">
-      <h2>What this tool does</h2>
-      <p>
-        This calculator helps you determine THC dosage for infused bases and recipes
-        without spreadsheets or manual math.
-      </p>
-      <ul>
-        <li>Total THC in your infusion</li>
-        <li>Potency per tablespoon, cup, and milliliter</li>
-        <li>THC per serving in finished recipes</li>
-      </ul>
+    <div class="header">
+      <img src="logo.png" class="logo" alt="125 Broadstreet Logo"/>
+      <h1>125 Broadstreet's Dosing Calculator</h1>
+      <p style="opacity:0.9;font-size:14px;">Calculate precise THC dosages for your cannabis infusions</p>
     </div>
 
-    <div class="card">
-      <h2>How it works</h2>
-      <ul>
-        <li>Enter cannabis weight and potency (THC% and/or THCA%)</li>
-        <li>Apply a realistic efficiency percentage (default: 75%)</li>
-        <li>Input how much base you made and how much you used</li>
-        <li>The calculator converts everything to a universal unit (mL)</li>
-      </ul>
-    </div>
+    <div class="content">
+      <form id="dosingForm">
+        <div class="section">
+          <div class="section-title">Cannabis Information</div>
+          <div class="form-grid">
+            <div>
+              <label for="baseType">Base Type</label>
+              <select id="baseType" required>
+                <option value="">Select base type</option>
+                <option value="butter">Butter</option>
+                <option value="oil">Oil</option>
+                <option value="coconut-oil">Coconut Oil</option>
+                <option value="tincture">Tincture</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
 
-    <div class="card">
-      <h2>Example</h2>
-      <div class="example">
-        <strong>Input</strong><br/>
-        7g flower • 21.5% THC • 75% efficiency<br/>
-        Infused into 1 cup butter<br/>
-        Recipe uses 0.5 cup • 10 servings
-        <br/><br/>
-        <strong>Output</strong><br/>
-        ~112 mg THC per cup<br/>
-        ~7 mg THC per tablespoon<br/>
-        ~5–6 mg THC per serving
+            <div>
+              <label for="cannabisGrams">Cannabis Used (grams)</label>
+              <input type="number" id="cannabisGrams" step="0.01" required placeholder="e.g., 7.5">
+            </div>
+
+            <div>
+              <label for="thcPercent">THC % <span style="font-weight:400;color:#888">(optional)</span></label>
+              <input type="number" id="thcPercent" step="0.01" placeholder="e.g., 20">
+            </div>
+
+            <div>
+              <label for="thcaPercent">THCA % <span style="font-weight:400;color:#888">(optional)</span></label>
+              <input type="number" id="thcaPercent" step="0.01" placeholder="e.g., 0">
+            </div>
+
+            <div>
+              <label for="efficiency">Efficiency % <span style="font-weight:400;color:#888">(default 75%)</span></label>
+              <input type="number" id="efficiency" step="0.01" value="75" placeholder="75">
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Base Information</div>
+          <div class="form-grid">
+            <div>
+              <label for="totalBaseMade">Total Base Made</label>
+              <input type="number" id="totalBaseMade" step="0.01" required placeholder="e.g., 2">
+            </div>
+
+            <div>
+              <label for="totalBaseUnit">Total Base Unit</label>
+              <select id="totalBaseUnit" required>
+                <option value="cups">Cups</option>
+                <option value="ml">mL</option>
+                <option value="fl-oz">fl oz</option>
+                <option value="tbsp">Tablespoons</option>
+                <option value="tsp">Teaspoons</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="baseUsed">Base Used in Recipe</label>
+              <input type="number" id="baseUsed" step="0.01" required placeholder="e.g., 0.5">
+            </div>
+
+            <div>
+              <label for="recipeUnit">Recipe Unit</label>
+              <select id="recipeUnit" required>
+                <option value="cups">Cups</option>
+                <option value="ml">mL</option>
+                <option value="fl-oz">fl oz</option>
+                <option value="tbsp">Tablespoons</option>
+                <option value="tsp">Teaspoons</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="servings">Final Servings/Pieces</label>
+              <input type="number" id="servings" step="1" required placeholder="e.g., 12">
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="calculate-btn">Calculate Dosage</button>
+      </form>
+
+      <div id="results" class="results" aria-live="polite">
+        <div class="result-grid" style="margin-bottom:8px;">
+          <div class="result-item">
+            <div class="result-label">Total THC</div>
+            <div class="result-value"><span id="totalThc">0</span> <span class="result-unit">mg</span></div>
+          </div>
+          <div class="result-item">
+            <div class="result-label">Per Serving</div>
+            <div class="result-value"><span id="perServing">0</span> <span class="result-unit">mg</span></div>
+          </div>
+          <div class="result-item">
+            <div class="result-label">Per Recipe Batch</div>
+            <div class="result-value"><span id="perRecipe">0</span> <span class="result-unit">mg</span></div>
+          </div>
+          <div class="result-item">
+            <div class="result-label">Per mL</div>
+            <div class="result-value"><span id="perMl">0</span> <span class="result-unit">mg</span></div>
+          </div>
+        </div>
+
+        <div class="result-grid">
+          <div class="result-item">
+            <div class="result-label">Per Teaspoon</div>
+            <div class="result-value"><span id="perTsp">0</span> <span class="result-unit">mg</span></div>
+          </div>
+          <div class="result-item">
+            <div class="result-label">Per Tablespoon</div>
+            <div class="result-value"><span id="perTbsp">0</span> <span class="result-unit">mg</span></div>
+          </div>
+          <div class="result-item">
+            <div class="result-label">Per fl oz</div>
+            <div class="result-value"><span id="perFlOz">0</span> <span class="result-unit">mg</span></div>
+          </div>
+          <div class="result-item">
+            <div class="result-label">Per Cup</div>
+            <div class="result-value"><span id="perCup">0</span> <span class="result-unit">mg</span></div>
+          </div>
+        </div>
+
+        <div class="disclaimer">
+          ⚠️ <strong>Disclaimer:</strong> This calculator provides estimates only. Actual potency may vary. Always start with a low dose and wait at least 2 hours before consuming more. Consult local laws and regulations regarding cannabis use.
+        </div>
+
+        <a class="back-link" href="index.html">← Back to info</a>
       </div>
     </div>
-
-    <div class="cta">
-      <button disabled>
-        Calculator UI Coming Next
-      </button>
-    </div>
-
-    <div class="footer">
-      For kitchen planning only.<br/>
-      Always label and dose responsibly.
-    </div>
-
   </div>
+
+  <script>
+    // Conversion constants (all to mL)
+    const conversions = {
+      'cups': 236.588,
+      'ml': 1,
+      'fl-oz': 29.5735,
+      'tbsp': 14.7868,
+      'tsp': 4.92892
+    };
+
+    // Standard conversions from mL
+    const mlToTsp = 0.202884;  // 1 mL = 0.202884 tsp
+    const mlToTbsp = 0.067628; // 1 mL = 0.067628 tbsp
+    const mlToFlOz = 0.033814; // 1 mL = 0.033814 fl oz
+    const mlToCup = 0.00422675; // 1 mL = 0.00422675 cups
+
+    document.getElementById('dosingForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      calculateDosage();
+    });
+
+    function calculateDosage() {
+      // Get input values
+      const cannabisGrams = parseFloat(document.getElementById('cannabisGrams').value) || 0;
+      const thcPercent = parseFloat(document.getElementById('thcPercent').value) || 0;
+      const thcaPercent = parseFloat(document.getElementById('thcaPercent').value) || 0;
+      const efficiency = parseFloat(document.getElementById('efficiency').value) || 75;
+
+      const totalBaseMade = parseFloat(document.getElementById('totalBaseMade').value) || 0;
+      const totalBaseUnit = document.getElementById('totalBaseUnit').value;
+      const baseUsed = parseFloat(document.getElementById('baseUsed').value) || 0;
+      const recipeUnit = document.getElementById('recipeUnit').value;
+      const servings = parseFloat(document.getElementById('servings').value) || 1;
+
+      // Convert THCA to THC (THCA * 0.877 = THC when decarboxylated)
+      const thcFromThca = thcaPercent * 0.877;
+      const totalThcPercent = thcPercent + thcFromThca;
+
+      // Calculate total THC in mg (grams -> mg = grams * 1000)
+      const totalThcMg = cannabisGrams * 1000 * (totalThcPercent / 100) * (efficiency / 100);
+
+      // Convert base amounts to mL
+      const totalBaseMl = totalBaseMade * (conversions[totalBaseUnit] || 1);
+      const baseUsedMl = baseUsed * (conversions[recipeUnit] || 1);
+
+      // Guard against divide by zero
+      const mgPerMl = totalBaseMl > 0 ? totalThcMg / totalBaseMl : 0;
+
+      // Calculate total THC in the recipe
+      const totalThcInRecipe = mgPerMl * baseUsedMl;
+
+      // Calculate per serving
+      const mgPerServing = servings > 0 ? totalThcInRecipe / servings : 0;
+
+      // Calculate various measurements
+      const mgPerTsp = mgPerMl * (1 / mlToTsp || 0);
+      const mgPerTbsp = mgPerMl * (1 / mlToTbsp || 0);
+      const mgPerFlOz = mgPerMl * (1 / mlToFlOz || 0);
+      const mgPerCup = mgPerMl * (1 / mlToCup || 0);
+
+      // Display results
+      document.getElementById('totalThc').textContent = totalThcMg.toFixed(2);
+      document.getElementById('perServing').textContent = mgPerServing.toFixed(2);
+      document.getElementById('perRecipe').textContent = totalThcInRecipe.toFixed(2);
+      document.getElementById('perMl').textContent = mgPerMl.toFixed(2);
+      document.getElementById('perTsp').textContent = mgPerTsp.toFixed(2);
+      document.getElementById('perTbsp').textContent = mgPerTbsp.toFixed(2);
+      document.getElementById('perFlOz').textContent = mgPerFlOz.toFixed(2);
+      document.getElementById('perCup').textContent = mgPerCup.toFixed(2);
+
+      // Show results
+      const resultsEl = document.getElementById('results');
+      resultsEl.style.display = 'block';
+      resultsEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  </script>
 </body>
 </html>
